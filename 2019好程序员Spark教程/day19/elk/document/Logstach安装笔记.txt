@@ -1,0 +1,79 @@
+https://www.elastic.co/guide/en/logstash/current/index.html
+首先下载logstash，上传到服务器
+
+logstash是用JRuby语言开发的，所以要安装JDK
+
+解压：
+tar -zxvf logstash-2.3.1.tar.gz -C /bigdata/
+
+启动：
+bin/logstash -e 'input { stdin {} } output { stdout{} }'
+bin/logstash -e 'input { stdin {} } output { stdout{codec => rubydebug} }'
+bin/logstash -e 'input { stdin {} } output { elasticsearch {hosts => ["node01:9200"]} stdout{} }'
+bin/logstash -e 'input { stdin {} } output { elasticsearch {hosts => ["node01:9200", "node02:9200"]} stdout{} }'
+
+bin/logstash -e 'input { stdin {} } output { kafka { topic_id => "test1" bootstrap_servers => "192.168.88.81:9092,192.168.88.82:9092,192.168.88.83:9092"} stdout{codec => rubydebug} }'
+
+============================================================================================
+
+以配置的形式:
+
+vi logstash-kafka.conf
+
+input {
+  file {
+    path => "/root/data/test.log"
+    discover_interval => 5
+    start_position => "beginning"
+  }
+}
+
+output {
+    kafka {
+	  topic_id => "test1"
+	  codec => plain {
+        format => "%{message}"
+		charset => "UTF-8"
+      }
+	  bootstrap_servers => "node01:9092,node02:9092,node03:9092"
+    }
+}
+
+#启动logstash
+bin/logstash -f logstash-kafka.conf
+
+
+
+------------------------------------------------
+
+vi logstash-es.conf
+
+input {
+	file {
+		type => "gamelog"
+		path => "/log/*/*.log"
+		discover_interval => 10
+		start_position => "beginning" 
+	}
+}
+
+output {
+    elasticsearch {
+		index => "gamelog-%{+YYYY.MM.dd}"
+        hosts => ["node01:9200", "node02:9200", "node03:9200"]
+    }
+}
+
+#启动logstash
+bin/logstash -f logstash.conf
+
+
+bin/logstash -e '
+input { stdin {} }
+filter {
+  grok {
+    match => { "message" => "%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}" }
+  }
+} 
+output { stdout{codec => rubydebug} 
+}'

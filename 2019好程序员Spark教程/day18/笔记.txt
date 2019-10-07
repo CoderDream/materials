@@ -1,0 +1,54 @@
+
+Spark Shuffle过程
+
+Spark Shuffle优化
+
+Spark优化过程
+
+总结Spark Core、SQL、Streaming的重点内容
+Spark Core:
+	RDD的概念和特性
+	常用算子：
+		迭代算子：map、mapPartition、foreach、foreachPartition
+		shuffle算子：byKey类算子、重分区算子、join类算子、去重算子
+		聚合类算子：reduceByKey、aggregateByKey、foldByKey、countByKey、countByValue、reduce、aggregate、combineByKey
+		排序类算子：sortBy、sortByKey
+	分区的概念：textFile（分片过程）、parallelize、可以指定并行度的算子（会发生shuffle的算子都可以指定并行度）
+	RDD的算子的计算过程都是在Executor进行计算的，除此之外都是在Driver端执行的
+	RDD的依赖关系：宽依赖、窄依赖
+	DAG:根据依赖关系有了DAG，可以stage划分，stage划分的目的是生成task
+		task一定不会跨stage，stage和task执行的过程都是有顺序的
+	缓存:提高计算效率
+		可以指定缓存级别
+	checkpoint：提高数据的安全性，缩短依赖链条，变相的提高计算效率
+	自定义排序：有较复杂的排序规则的需求是可以用该方式实现
+	自定义分区器：需要实现Partitioner
+	自定义累加器：累加的变量声明在Driver端，Executor无法获取其值，只有Driver可以拿取该值
+	广播变量：减少网络IO次数，每个Worker只广播一次
+SparkSQL:
+	DataFrame、DataSet
+	RDD转换为DataFrame：反射、StructType
+	DSL：select、filter（where）、groupBy、join、agg(avg、max、min、count)
+	SQL：创建临时视图
+	自定义函数：UDF、UDAF（弱类型、强类型）
+	输入和输出（对接数据库）
+继承Hive：Hive-On-Spark
+
+Kafka：
+	主要的组件
+	各种概念
+Streaming：
+	DSteam
+	批次间隔
+	transformations、output operations
+	updateStateByKey、transform、window operations
+	streaming-kafka：direct（消息的一致性）
+	
+Spark-On-Yarn：执行流程
+	
+
+Redis介绍
+
+Redis的服务端和客户端
+
+Redis的数据结构

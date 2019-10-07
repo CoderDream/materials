@@ -1,0 +1,332 @@
+http://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html
+https://github.com/elastic/elasticsearch
+###【在多台机器上执行下面的命令】###
+#es启动时需要使用非root用户，所以创建一个bigdata用户：
+useradd bigdata
+#为bigdata用户添加密码：
+echo 123456 | passwd --stdin bigdata
+#将bigdata添加到sudoers
+echo "bigdata ALL = (root) NOPASSWD:ALL" | tee /etc/sudoers.d/bigdata
+chmod 0440 /etc/sudoers.d/bigdata
+#解决sudo: sorry, you must have a tty to run sudo问题，在/etc/sudoers注释掉 Default requiretty 一行
+sudo sed -i 's/Defaults    requiretty/Defaults:bigdata !requiretty/' /etc/sudoers
+#切换用户
+su - bigdata
+
+#创建一个bigdata目录
+mkdir /{bigdata,data}
+#给相应的目录添加权限
+chown -R bigdata:bigdata {bigdata,data}
+
+-------------------------------------------------------------------------------------------------
+We recommend installing the Java 8 update 20 or later, or Java 7 update 55 or later. 
+Previous versions of Java 7 are known to have bugs that can cause index corruption and data loss.
+Elasticsearch will refuse to start if a known-bad version of Java is used.
+###【切换到bigdata用户安装】###
+1.安装jdk（jdk要求1.8.20或1.7.55以上）
+
+2.上传es安装包
+
+3.解压es
+tar -zxvf elasticsearch-2.4.4.tar.gz -C /bigdata/
+
+4.elasticsearch-2.4.4目录下创建plugins文件夹并添加权限
+mkdir plugins
+chown -R bigdata:bigdata plugins
+
+5.安装plugin插件
+ #首先需要在es根目录下手动创建plugins目录
+ #远程安装插件
+ bin/plugin install mobz/elasticsearch-head
+ #本地方式安装head插件
+ bin/plugin install file:///home/bigdata/elasticsearch-head-master.zip 
+
+4.修改配置
+vi /bigdata/elasticsearch-2.4.4/config/elasticsearch.yml
+#集群名称，通过组播的方式通信，通过名称判断属于哪个集群
+cluster.name: bigdata
+#节点名称，要唯一
+node.name: es-1
+#数据存放位置
+path.data: /data/es/data
+#日志存放位置
+path.logs: /data/es/logs
+#es绑定的ip地址
+network.host: 192.168.88.81
+#初始化时可进行选举的节点
+discovery.zen.ping.unicast.hosts: ["hadoop01", "hadoop02", "hadoop03"]
+
+5.使用scp拷贝到其他节点
+scp -r elasticsearch-2.4.4/ hadoop02:$PWD
+scp -r elasticsearch-2.4.4/ hadoop03:$PWD
+
+6.在其他节点上修改es配置，需要修改的有node.name和network.host
+
+7.启动es（/bigdata/elasticsearch-2.4.4/bin/elasticsearch -h查看帮助文档） 
+/bigdata/elasticsearch-2.4.4/bin/elasticsearch -d
+
+8.用浏览器访问es所在机器的9200端口
+http://192.168.88.81:9200/
+{
+  "name" : "es-1",
+  "cluster_name" : "bigdata",
+  "version" : {
+    "number" : "2.4.4",
+    "build_hash" : "bd980929010aef404e7cb0843e61d0665269fc39",
+    "build_timestamp" : "816-04-04T12:25:05Z",
+    "build_snapshot" : false,
+    "lucene_version" : "5.5.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+kill `ps -ef | grep Elasticsearch | grep -v grep | awk '{print $2}'`
+
+------------------------------------------------------------------------------------------------------------------
+#es安装插件下载es插件
+/bigdata/elasticsearch-2.4.4/bin/plugin install mobz/elasticsearch-head
+
+#本地方式安装head插件
+./plugin install file:///home/bigdata/elasticsearch-head-master.zip 
+
+#访问head管理页面
+http://192.168.88.81:9200/_plugin/head
+
+
+RESTful接口URL的格式：
+http://localhost:9200/<index>/<type>/[<id>]
+其中index、type是必须提供的。--->index相当于关系型数据库的dababase,type相当于table
+id是可选的，不提供es会自动生成。
+index、type将信息进行分层，利于管理。
+index可以理解为数据库；type理解为数据表；id相当于数据库表中记录的主键，是唯一的。
+
+
+#向store索引中添加一些书籍
+curl -XPUT 'http://192.168.88.81:9200/store/books/1' -d '{
+  "title": "Elasticsearch: The Definitive Guide",
+  "name" : {
+    "first" : "Zachary",
+    "last" : "Tong"
+  },
+  "publish_date":"2015-02-06",
+  "price":"49.99"
+}'
+
+#通过浏览器查询
+http://192.168.88.81:9200/store/books/1
+
+#在linux中通过curl的方式查询
+curl -XGET 'http://192.168.88.81:9200/store/books/1'
+
+#再添加一本书的信息
+curl -XPUT 'http://192.168.88.81:9200/store/books/2' -d '{
+  "title": "Elasticsearch Blueprints",
+  "name" : {
+    "first" : "Vineeth",
+    "last" : "Mohan"
+  },
+  "publish_date":"2015-06-06",
+  "price":"35.99"
+}'
+
+
+# 通过ID获得文档信息
+curl -XGET 'http://192.168.88.81:9200/store/books/2'
+
+
+#在浏览器中查看
+http://192.168.88.81:9200/bookstore/books/1
+
+# 通过_source获取指定的字段
+curl -XGET 'http://192.168.88.81:9200/store/books/1?_source=title'
+curl -XGET 'http://192.168.88.81:9200/store/books/1?_source=title,price'
+curl -XGET 'http://192.168.88.81:9200/store/books/1?_source'
+
+#可以通过覆盖的方式更新
+curl -XPUT 'http://192.168.88.81:9200/store/books/1' -d '{
+  "title": "Elasticsearch: The Definitive Guide",
+  "name" : {
+    "first" : "Zachary",
+    "last" : "Tong"
+  },
+  "publish_date":"2016-02-06",
+  "price":"99.99"
+}'
+
+# 或者通过 _update  API的方式单独更新你想要更新的
+curl -XPOST 'http://192.168.88.81:9200/store/books/1/_update' -d '{
+  "doc": {
+     "price" : 88.88
+  }
+}'
+
+curl -XGET 'http://192.168.88.81:9200/store/books/1'
+
+#删除一个文档
+curl -XDELETE 'http://192.168.88.81:9200/store/books/1'
+
+
+# 最简单filter查询
+# SELECT * FROM books WHERE price = 35.99
+# filtered 查询价格是35.99的
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+    "query" : {
+        "filtered" : {
+            "query" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "term" : {
+                    "price" : 35.99
+                  }
+              }
+        }
+    }
+}'
+
+#指定多个值
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+    "query" : {
+        "filtered" : {
+            "filter" : {
+                "terms" : {
+                    "price" : [35.99, 88.88]
+                  }
+              }
+        }
+    }
+}'
+
+
+# SELECT * FROM books WHERE publish_date = "2015-06-06"
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+  "query" : {
+    "filtered" : {
+        "filter" : {
+           "term" : {
+              "publish_date" : "2015-06-06"
+            }
+          }
+      }
+  }
+}'
+
+
+
+# bool过滤查询，可以做组合过滤查询
+# SELECT * FROM books WHERE (price = 35.99 OR price = 99.99) AND (publish_date != "2016-02-06")
+# 类似的，Elasticsearch也有 and, or, not这样的组合条件的查询方式
+# 格式如下：
+#  {
+#    "bool" : {
+#    "must" :     [],
+#    "should" :   [],
+#    "must_not" : [],
+#    }
+#  }
+#
+# must: 条件必须满足，相当于 and
+# should: 条件可以满足也可以不满足，相当于 or
+# must_not: 条件不需要满足，相当于 not
+
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "bool" : {
+          "should" : [
+            { "term" : {"price" : 35.99}},
+            { "term" : {"price" : 49.99}}
+          ],"must_not" : {
+            "term" : {"publish_date" : "2015-02-06"}
+          }
+        }
+      }
+    }
+  }
+}'
+
+
+# 嵌套查询
+# SELECT * FROM books WHERE price = 35.99 OR ( publish_date = "2015-02-06" AND price = 49.99 )
+
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "bool" : {
+          "should" : [
+              { "term" : {"price" : 35.99}},
+              { "bool" : {
+              "must" : [
+                {"term" : {"publish_date" : "2015-02-06"}},
+                {"term" : {"price" : 49.99}}
+              ]
+            }}
+          ]
+        }
+      }
+    }
+  }
+}'
+
+# range范围过滤
+# SELECT * FROM books WHERE price >= 20 AND price < 100
+# gt :  > 大于
+# lt :  < 小于
+# gte :  >= 大于等于
+# lte :  <= 小于等于
+
+# 会按照字符串来进行比较 20~90
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+  "query" : {
+    "filtered" : {
+      "filter" : {
+        "range" : {
+          "price" : {
+            "gt" : 20.0,
+            "lt" : 99
+          }
+        }
+      }
+    }
+  }
+}'
+
+
+# 另外一种 and， or， not查询
+# 没有bool, 直接使用and , or , not
+# 注意: 不带bool的这种查询不能利用缓存
+# 查询价格既是88.88，publish_date又为"2015-02-06"的结果
+curl -XGET 'http://192.168.88.81:9200/store/books/_search' -d '{
+  "query": {
+    "filtered": {
+      "filter": {
+        "and": [
+        {
+          "term": {
+            "price":88.88
+          }
+        },
+        {
+          "term": {
+            "publish_date":"2016-02-06"
+          }
+        }
+       ]
+     },
+     "query": {
+      "match_all": {}
+      }
+    }
+  }
+}'
+
+
+http://192.168.88.81:9200/bookstore/books/_search
+
+#es安装插件下载es插件
+/bigdata/elasticsearch-2.4.4/bin/plugin install elasticsearch/marvel/latest
+#访问head管理页面
+http://192.168.88.81:9200/_plugin/marvel
+

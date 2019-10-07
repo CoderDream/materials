@@ -1,0 +1,13 @@
+
+任务：
+	掌握Spark Shuffle过程
+	掌握Spark参数调优
+	Spark调优
+	复习Spark基础
+	Redis安装和启动以及常用操作
+
+预习：ElasticSearch文档
+
+默写：
+	描述Spark Shuffle过程
+	手写代码用SparkSQL实现WordCount

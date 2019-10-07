@@ -1,0 +1,26 @@
+
+Kafka-Streaming
+	receiver和direct方式的理解和区别以及优缺点
+	代码实现：direct（直连）方式维护offset的过程
+	怎么解决offset失效问题
+	怎么解决消费端数据积压问题（限速）
+	streaming消费数据的一次仅一次语义的实现
+
+Spark On Yarn
+	Local模式
+	Standalone模式
+	On-Yarn模式
+	Mesos
+	
+	应用背景：
+		公司的使用习惯决定了资源调度系统的使用，节省了运维的工作量
+		集群的资源是有限的，资源调度系统越少，资源的浪费越少
+		
+	配置：
+
+Spark Core源码分析
+	Spark集群启动流程
+
+
+
+

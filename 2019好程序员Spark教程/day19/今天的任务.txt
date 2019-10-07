@@ -1,0 +1,8 @@
+任务：
+	Redis的api练习
+	Redis的集群搭建
+	搭建ES集群、安装head插件、安装ik分词器
+	理解ES的基本概念：index、mapping、document、type、field
+	restful api的练习
+	java api的练习（主要联系各种查询）
+	

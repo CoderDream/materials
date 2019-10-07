@@ -1,0 +1,19 @@
+任务：
+	streaming消费kafka的两种方式：
+		receiver和direct方式的理解和区别以及优缺点
+	代码实现：direct（直连）方式维护offset的过程
+	怎么解决offset失效问题
+	怎么解决消费端数据积压问题（限速）
+	streaming消费数据的一次仅一次语义的实现
+	
+	Spark-On-Yarn的执行流程总结
+	
+	Spark集群启动流程总结
+	
+回顾Spark的任务提交流程
+
+默写：
+	streaming消费kafka的两种方式的概念、优缺点、区别
+	streaming消费kafka时怎么实现一次仅一次语义（消费数据的一致性）
+	Spark集群启动流程
+	
