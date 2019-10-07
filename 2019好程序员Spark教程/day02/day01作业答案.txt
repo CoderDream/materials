@@ -1,0 +1,72 @@
+// 第一题 输入两个数，按从小到大排序后输出
+    val a = StdIn.readInt()
+    val b = StdIn.readInt()
+
+   if(a>b){
+     println(b+" "+a)
+   }else{
+     println(a+" "+b)
+   }
+
+// 第二题 输入三个数(互不相同)，并将三个升序输出(升序(从小到大)
+    var a = StdIn.readInt()
+    var b = StdIn.readInt()
+    var c = StdIn.readInt()
+     //3,2,1
+    var  tmp = 0 //中间变量
+    if(a>c){
+       //交换a和c的值
+      tmp = a
+      a = c
+      c = tmp
+    }
+    //因为上面数是有序的所以可以直接叫a和c,但是能保证b不是最小
+    if(a>b){
+      tmp = a
+      a = b
+      b = tmp
+    }
+    if(b>c){
+      tmp = b
+      b = c
+      c = tmp
+    }
+   println(a+" "+b+" "+c)
+   
+   
+// 第三题 输入一个年份，判断是否是闰年
+		能被400整除
+		能被4整除，不能被100整除
+    val year = 2019
+    val res:Boolean = if((year%4==0 && year%100!=0)||(year%400 == 0 )) true else false
+      println(res)
+
+// 第四题 输入一个时间，输出它的下一秒时间。
+    var h = 20
+    var m = 20
+    var s = 20
+    //秒自增
+    s += 1
+    if(s == 60){
+      s = 0
+      m+=1
+      if(m == 60){
+         m = 0
+         h += 1
+        if(h == 24){
+          h = 0
+        }
+      }
+    }
+    println(h+":"+m+":"+s)
+    
+	
+// 第五题 输出1000以内所有的水仙花数，所谓水仙花数是指一个3位数，其各位数字立方和等于该数本身。
+    for(i <- 100 until 1000){
+       var a = i/100
+       var b = i/10%10
+       var c  = i%10
+      if((a*a*a + b*b*b + c*c*c) == i){
+        println("水仙花数:"+i)
+      }
+    }

@@ -1,0 +1,16 @@
+
+三个特殊的原语：
+	updateStateByKey：
+		updataStateByKey会将历史结果拿到当前批次进行进一步的计算
+
+	transform：
+		借助这个原语可以操作DStream里的RDD，也就是可以用算子的方式间接操作DStream，大大丰富了DStream的api
+
+	window operations：
+		应用背景：计算的批次间隔不变，但每次展示的结果范围是多个批次间隔的范围，此时最好用SparkStreaming提供的窗口操作实现
+		使用：需要提供两个重要的参数：窗口长度、滑动间隔
+
+Streaming消费Kafka数据
+
+
+

@@ -1,0 +1,31 @@
+
+RDD概念总结
+
+RDD的弹性
+
+创建RDD的两种方式
+
+RDD的api：Transformation和Action
+	map和mapPartitions的区别：
+		map是将func作用于每一个元素上，而mapPartitions是将func作用于每个分区上，
+		应用场景为：如果该RDD数据集的数据不是很多的情况下，可以用map处理，
+		如果数据比较多，可以用mapPartitions，可以提高计算效率，
+		如果数据量很大，有可能会导致oom
+	
+	重分区算子：
+	repartition
+	coalesce
+	partitionBy
+	repartitionAndSortWithinPartitions
+	
+	foreach和foreachPartition的区别：
+		首先他们都没有返回值
+		foreach是将func作用于每一个元素上，而foreachPartitions是将func作用于每个分区上，
+		应用场景：一般都是用在将结果输出的场景，
+		如果结果数据量很少，可以用foreach进行存储，
+		如果数据量比较大，会拿很多的连接进行存储，可能数据库会直接宕机，可以用foreachPartiton，用一个分区对应一个连接
+
+	collect：属于Action算子，会将每个Executor计算的结果汇总到Driver并将结果数据封装到Array
+	
+算子练习
+

@@ -1,0 +1,9 @@
+
+数组：定长数组和变长数组的操作
+Map：可变Map和不可变Map的操作
+元组的操作
+List：可变List和不可变List的操作
+Set：可变Set和不可变Set的操作
+自己实现单词计数（很重要）
+常用方法的练习：map、flatMap、mapValues、filter、reduce、fold、aggregate
+以上内容一定要多练习！明天提问！

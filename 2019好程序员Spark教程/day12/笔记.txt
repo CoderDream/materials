@@ -1,0 +1,13 @@
+
+Spark SQL介绍
+
+DataFrame和DataSet
+	DataFrame：抽象的数据集，RDD和Schema的集合
+		弱类型，我们在操作的时候可以像在操作二维表一样进行操作
+	DataSet: 属于DataFrame的父类，DataFrame=Dataset[Row]，强类型
+
+SparkSQL的开发流程（基本操作）
+	DSL
+	SQL
+
+自定义函数（UDF、UDAF）

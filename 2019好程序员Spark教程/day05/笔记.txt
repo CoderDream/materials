@@ -1,0 +1,8 @@
+
+Netty
+
+Akka
+akka.actor.provider="akka.remote.RemoteActorRefProvider"
+akka.remote.netty.tcp.hostname=$host
+akka.remote.netty.tcp.port=$port
+

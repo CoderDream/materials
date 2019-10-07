@@ -1,0 +1,4 @@
+<<<!>>>	第一个字段分隔符
+<<<!>>>,<<<!>>>	中间字段分隔符
+commandid	houseid		gathertime		srcip	destip	srcport	destport	domainname	proxytype	proxyip	proxyport	title	content	url	logid
+指令id		机房id	  	日志收集时间	源ip	目标ip	源port	目标port	域名		代理类型	代理ip	代理port	标题	内容	url	logid

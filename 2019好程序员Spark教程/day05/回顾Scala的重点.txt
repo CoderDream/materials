@@ -1,0 +1,34 @@
+
+Scala的基本语法：
+	变量的定义：val、var
+	条件表达式、块表达式、混合表达式
+	循环：for、while  有很多批处理的方法里面就是调用的for或while循环
+	方法和函数的声明
+	集合：
+		数组：定长和变长
+		元组：Tuple+数字
+		Map：不可变和可变
+		List：不可变和可变
+		Set：不可变和可变
+		
+	常用方法：map、flatMap、mapValues、foreach、reduce、fold、aggregate、filter、zip、groupBy、sortBy、sortWith
+	
+	面向对象
+	
+	模式匹配
+	
+	高阶函数：
+		作为值的函数
+		闭包
+		柯里化
+		隐式转换函数
+	
+	泛型
+	
+Netty
+
+Akka
+
+
+
+

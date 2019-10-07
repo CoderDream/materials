@@ -1,0 +1,14 @@
+
+任务：
+	kafka的基础概念一定要掌握！！！
+	streaming中，transformations的三个重要的原语的应用背景和使用方式（updateStateByKey、transform、window operations）
+	streaming消费kafka的数据的练习
+	
+总结：spark core、 sql、streaming的基础操作
+	总结集群启动流程和任务提交流程
+
+
+默写题：
+手写Streaming应用程序，实现批次累加功能
+transform的应用场景
+窗口操作的应用场景

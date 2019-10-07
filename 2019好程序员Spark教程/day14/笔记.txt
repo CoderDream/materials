@@ -1,0 +1,18 @@
+
+Kafka的常用命令的操作
+
+Kafka的一些常见的重要的问题
+
+Kafka生产者和消费者的api练习
+
+Streaming介绍
+
+DStream的概念和理解
+	DStream是将多个批次的算子都包含在了一个DStream里面，
+	也就是说，一个DStream里可以有多个RDD，但这多个RDD都是一样的计算逻辑
+	DStream的特性：
+		DStream之间是有依赖关系的
+		每隔一段时间（批次间隔）都会生成一个RDD
+		每隔一段时间都会有一个函数作用到RDD上
+
+transformations、output operations

@@ -1,0 +1,44 @@
+
+DAG、Stage划分、task的生成
+	Application：应用程序
+		输入、计算、输出
+	Job：Action和之前的所有Transformation属于一个Job
+		计算一个应用程序有几个Job，只需要计算有几个Action即可
+	Stage：将RDD进行范围描述的过程称为Stage的划分，
+		Stage划分的目的是为了生成task
+		Stage划分的依据是查看RDD和它的父RDD之间的依赖关系，如果是宽依赖，则划分Stage
+	Task：Executor执行的最小单元就是task，
+		task包含了需要计算的对应的一个分区的数据，还包含了计算过程，每个task计算完会最终落地到磁盘
+		
+	Stage划分过程：拿到最后一个RDD，调用递归，从后往前递归，找到finalRDD的父RDD，开始RDD之间的依赖关系，
+		如果是窄依赖，继续找父RDD的父RDD。如果是宽依赖，则划分为一个Stage。如此类推，指导所有的Stage划分完成。
+		
+	Task的生成过程：task的范围一定是在它的所属Stage的范围之内。
+	一个task在执行的过程中会拿到一个线程，一个task对应一个分区，
+	一个Stage里，有几个分区，就有几个task，
+	在没有人为的更改分区数的情况下，一个Job的task的数量=Stage的数量 * 分区数
+	
+	RDD是个抽象类，实际上有很多子RDD：
+		textFile：HadoopRDD
+		flatMap:MapPartitionsRDD
+		map:MapPartitionsRDD
+		reduceByKey:ShuffledRDD
+		sortBy:ShuffledRDD
+		parallelize:ParallelCollectionRDD
+
+RDD的缓存和缓存级别
+	目的：使得依赖链条变短，提高计算效率
+	缓存后，数据会缓存到每个节点的每个Executor对应的内存中
+
+checkpoint检查点
+	cache和checkpoint的区别：
+		1、存储的位置不一样
+		2、cache的数据安全性不高，checkpoint就是为了提高中间结果数据的安全性的
+	什么时候使用cache或checkpoint
+		1.某步骤计算特别耗时
+		2.计算链条特别长
+		3.发生shuffle之后
+
+Spark集群启动流程
+
+Spark任务提交流程

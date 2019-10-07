@@ -1,0 +1,25 @@
+
+自定义函数
+
+开窗函数
+
+集成Hive
+集成Hive的唯一目的就是为了让SparkSQL能够操作Hive元数据库中的表
+
+集成步骤：
+	将hive-site.xml复制到spark的conf目录中
+	启动spark-shell的时候，需要将请求数据库的驱动包加载进来"--jars path"
+用代码访问Hive元数据库：
+	1、复制hive-site.xml hdfs-site.xml core-site.xml到resources
+	2、开始代码编写
+	3、将应用程序打包提交到集群
+
+SparkSQL的JDBC操作
+
+Kafka介绍
+
+JMS介绍
+
+Kafka的重要组件
+
+Kafka集群搭建

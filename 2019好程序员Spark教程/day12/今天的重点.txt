@@ -1,0 +1,13 @@
+主要任务：
+对DataFrame和DataSet的理解
+RDD、DataFrame、DataSet之间的互相转换
+通过StructType的方式生成Schema的流程
+分别用DSL语言风格和SQL语言风格实现需求
+自定义函数的练习
+
+
+明天默写题：
+DataFrame的概念
+DataSet的概念
+RDD、DataFrame、DataSet互相转换用到的方法
+描述一下使用udf的流程

@@ -1,0 +1,22 @@
+1.实现一个方法，使得返回数组中大于n的元素个数，等于n的元素个数，小于n的元素个数，并且一起返回。
+	例：getNum(Array(1,2,3,2,4,1,5), 2) 结果为：(2,2,3)
+答案：
+def getCounts(arr: Array[Int], n: Int): (Int, Int, Int) = {
+  val v1 = arr.count(_ > n)
+  val v2 = arr.count(_ == n)
+  val v3 = arr.count(_ < n)
+  (v1, v2, v3)
+}
+
+2.实现一个方法，使得传进去的数组的元素两两交换。
+	例：Array(1,2,3,4,5) 结果为：Array(2,1,4,3,5)
+答案：
+def swap(arr: Array[Int]): Array[Int] = {
+  for (i <- 0 until(arr.length - 1, 2)) {
+    //定义一个中间变量
+    val tmp = arr(i)
+    arr(i) = arr(i + 1)
+    arr(i + 1) = tmp
+  }
+  arr
+}

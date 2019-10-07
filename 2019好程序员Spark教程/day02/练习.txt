@@ -1,0 +1,77 @@
+
+    //创建一个List
+
+
+    //将lst0中每个元素乘以2后生成一个新的集合
+
+
+    //将lst0中的偶数取出来生成一个新的集合
+
+
+    //将lst0排序后生成一个新的集合
+
+
+    //反转排序顺序
+
+
+    //将lst0中的元素4个一组,类型为Iterator[List[Int]]
+
+
+    //将Iterator转换成List
+
+
+    //将多个list压扁成一个List
+
+	val lines = List("hello tom hello jerry", "hello suke hello", " hello tom")
+    //先按空格切分，再压平
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    //并行计算求和
+    val arr = Array(1,2,3,4,5,6,7,8,9,10)
+
+	
+    //按照特定的顺序
+
+
+    //折叠：有初始值（无特定顺序）
+
+
+    //折叠：有初始值（有特定顺序）
+
+
+    //聚合
+    val arr1 = List(List(1, 2, 3), List(3, 4, 5), List(2), List(0))
+
+
+
+    val l1 = List(5,6,4,7)
+    val l2 = List(1,2,3,4)
+
+    //求并集
+
+
+    //求交集
+
+
+    //求差集
+
+   
+   
+   
+   
+   
+   
+   

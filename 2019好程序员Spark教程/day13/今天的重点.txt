@@ -1,0 +1,27 @@
+任务：
+实现UDAF的练习，能够自己实现
+用sparksql实现开窗函数等练习
+继承外部Hive的配置和实现过程
+sparksql的jdbc的输入和输出
+
+kafka的应用场景
+kafka的主要组件有哪些
+kafka的集群安装
+
+
+预习：
+kafka的文件存储机制
+kafka的segment的概念
+kafka的同步数据
+zk如何管理kafka
+
+
+默写题：
+有数据文件test.txt
+数据内容：
+hello java hello
+hello scala scala
+hello python
+....还有很多数据....
+用SparkSQL求单词计数
+将结果保存到MySQL

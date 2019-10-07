@@ -1,0 +1,14 @@
+
+RDD的概念一定要理解
+理解transformation和action
+自己总结今天练习的算子，能够灵活运用
+其中重点掌握的算子有：
+	map、mapPartition
+	foreach、foreachPartition
+	排序类算子
+	聚合类算子
+	重分区算子
+	action类算子
+
+
+

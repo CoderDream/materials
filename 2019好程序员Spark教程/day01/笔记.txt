@@ -1,0 +1,62 @@
+
+Scala介绍
+	Hadoop	Java
+	Hive	Java
+	Spark	Scala
+	Kafka	Scala
+	Akka	Scala
+	目标：能够开发基于Spark的应用程序，能够理解并应用函数式编程思想
+	
+	作者：马丁
+	Pizza 实现函数式编程 Scala的前身
+	
+	方向：面向对象、函数式编程
+	
+
+变量的声明
+	val 修饰的变量是指其引用不可变
+	
+
+数据类型
+	一切类的基类是Any
+	AnyRef：是Any的子类，是所有引用类型的基类
+	AnyVal：是Any的子类，是所有值类型的基类
+	AnyVal的子类：9个
+		Byte、Char、Short、Int、Long、Float、Double----7个值类型
+		Boolean、Unit---非数值类型 ， 其中Unit代表void，没有返回值，用“()”代表
+		
+	Scala里是没有包装类型
+
+条件表达式
+	Scala支持返回值为混合类型的表达式
+		val z = if(x > 1) 1 else if(x == 0) 0 else "Error"
+
+循环
+	for(i <- 0 to arr.length - 1) {
+		if(arr(i) % 2 == 0) println(arr(i))
+	}
+	
+	until和to方法的区别
+	
+	map和foreach的应用场景
+	map：要求有返回的时候需要用到
+	foreach：一般在做数据持久化的时候用到
+	
+	
+
+方法和函数
+	def m1(x: Int, y: Int): Int = {x * y} // 有参数有返回的方法，可以不加返回值类型，自己可以类型推断。当该方法属于递归方法时，必须指定返回类型。
+	 def m2(x: Int): Unit = {x + 1} // 没有返回值的方法
+	 def m2(x: Int){x + 1} // 没有返回值的方法（不加“=”,默认没有返回值）
+	 
+	  val f1 = (x: Int, y: Int) => x * y // 有参有返回值的函数
+	  val f2 = () => 100 * 2 // 没有返回值的函数
+	  (x: Int, y: Int) => x * y // 匿名函数（没有变量接收，代表没有函数签名，就称作匿名函数）
+	  
+	  val f2: Int => Int = x => x * x // 函数的另外一种声明方式
+	  
+	  方法可以转换为函数，需要用到空格加“_”
+	  如果将方法以值的形式传递到方法中去，这个过程其实是方法隐式的转换为了函数
+
+
+

@@ -1,0 +1,47 @@
+
+了解Spark
+
+Spark集群安装（Standalone）
+
+提交任务
+/export/servers/spark-2.2.0-bin-hadoop2.6/bin/spark-submit \
+--class com.qf.gp1922.day06.SparkWordCount --master spark://node01:7077 \
+--executor-memory 512m \
+--total-executor-cores 2 \
+/root/1.jar hdfs://node01:9000/files \
+hdfs://node01:9000/out-20190729-2
+
+Spark的几个重要角色
+	Master
+	Worker
+	Driver
+	Executor
+
+Spark Shell
+	SparkShell是一个Spark的特殊的应用程序，因为我们可以在shell里再提交job，
+	所以shell启动后，Spark的Driver端会启动SparkSubmit进程
+	local模式启动：bin/spark-shell
+	集群模式启动：
+	spark-2.2.0-bin-hadoop2.6]# bin/spark-shell \
+	--master spark://node01:7077 \
+	--executor-memory 512m \
+	--total-executor-cores 2
+
+Spark WordCount
+
+RDD的概念和特性
+RDD是一个弹性的分布式数据集，是一个数据的描述，具有不可变，可分区等特性。
+RDD提供了一系列对RDD的操作的方法。
+
+A list of partitions
+一系列的分区
+A function for computing each split
+一个函数会作用到每个分片
+A list of dependencies on other RDDs
+RDD之间是有依赖关系的
+Optionally, a Partitioner for key-value RDDs (e.g. to say that the RDD is hash-partitioned)
+如果该RDD是key，value的RDD，会有一个分区器作用在该RDD上
+Optionally, a list of preferred locations to compute each split on (e.g. block locations for an HDFS file)
+位置优先性（就近原则）
+
+

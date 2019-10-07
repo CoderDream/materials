@@ -1,0 +1,12 @@
+
+完成Scala的环境搭建
+完成IDEA的Scala插件安装和Maven配置
+变量的声明，var和val的区别
+条件表达式的练习
+循环：for、while、map和filter方法的练习、map和foreach方法的练习和区别
+方法和函数的声明
+函数的传递
+
+
+
+
